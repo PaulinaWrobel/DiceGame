@@ -1,8 +1,5 @@
 library ieee;
 use ieee.std_logic_1164.all;
---use IEEE.STD_LOGIC_ARITH.ALL;
---use ieee.std_logic_unsigned.all;
---USE ieee.numeric_std.ALL; 
 
 entity GameTest is
 port(
@@ -24,11 +21,11 @@ architecture Behav of GameTest is
 
 	type array_type is array (12 downto 0) of std_logic_vector(4 downto 0); 
 	signal SumArray: array_type := ("00100", "00101", "00100", "00101", "00111", "00100", "00110", "00110", "01100", "00011", "00010", "01011", "00111");
-	signal n: integer range 0 to 15;
+	signal n: integer range 0 to 12;
 
 begin
 
-ClkIGen: ClkI <= not ClkI after 50 ns;
+ClkIGen: ClkI <= not ClkI after 10 ns;
 
 Clk <= ClkI;
 Sum <= SumI;
