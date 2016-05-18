@@ -17,7 +17,7 @@ architecture Behav of TB_DG_ALL is
 	signal write_enable: std_logic;
 	signal write_text: string(1 to 3);
 
-	type state_type is (SRESET, SROLL, SROLL2, SWAIT, SWAIT2, SWRITE);
+	type state_type is (SRESET, SROLL, SROLL2, SWAIT, SWRITE);
 	signal state: state_type;
 	signal n: integer range 0 to 11;
 
@@ -37,19 +37,6 @@ UUT: entity work.DG_ALL
 
 ClkI <= not ClkI after 10 ns;
 
---Reset: process (ClkI)
---begin
---	if (ClkI'event and ClkI='1') then
---		if (WinI='1' or LoseI='1') then
---			ResetI <= '1';
---		end if;
---		if (ResetI='1') then
---			ResetI <= '0';
---			RbI <= '1' after 40 ms, '0' after 240 ms;
---		end if;
---	end if;
---end process Reset;
-
 TBState: process (ClkI_10Hz)
 begin
 	if ClkI_10Hz = '1' and ClkI_10Hz'event then
@@ -61,8 +48,6 @@ begin
 			when SROLL2 =>
 				state <= SWAIT;
 			when SWAIT =>
-				state <= SWAIT2;
-			when SWAIT2 =>
 				state <= SWRITE;
 			when SWRITE =>
 				if (WinI='1' or LoseI='1') then
@@ -99,21 +84,15 @@ begin
 			ResetI <= '0';
 			RbI <= '0';
 			write_enable <= '0';
-		when SWAIT2 =>
-			ResetI <= '0';
-			RbI <= '0';
-			write_enable <= '0';
 		when SWRITE =>
 			ResetI <= '0';
 			RbI <= '0';
-			write_enable <= '1' after 20 ns;
+			write_enable <= '1' after 10 ns;
 	end case;
 end process TBOutputs; 
 
 write_text <= "NEW" when (WinI='1' or LoseI='1') else "   ";
 
---write_enable <= not ClkI;
---write_enable <= not <<signal .UUT.Roll : std_logic>> after 1 ns;
 write_file: process (write_enable)
 	file file_results: text open write_mode is "testbench_results.txt";
 	variable line_results: line;
