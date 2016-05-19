@@ -1,10 +1,10 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity fullAdder is
   port(a: in std_logic;
     b: in std_logic;
-    c_in: in std_logic; 
+    c_in: in std_logic;
     c_out: out std_logic;
     s: out std_logic
   );

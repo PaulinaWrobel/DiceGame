@@ -9,11 +9,11 @@ port(
 	Sum: in std_logic_vector(4 downto 0);
 	Roll: out std_logic;
 	Win: out std_logic;
-	Lose: out std_logic 
+	Lose: out std_logic
 );
 end entity DG_NoSum;
 
-architecture Behav of DG_NoSum is
+architecture behav of DG_NoSum is
 	type state_type is (SINIT, SWIN, SLOSE, SROLL1, SCHECK1, SROLL2, SCHECK2, SIDLE);
 	signal state: state_type;
 	signal D7: std_logic;
@@ -31,7 +31,7 @@ begin
 	SumReg <= SumReg;
 	if Sp = '1' and Sp'event then
 		SumReg <= Sum;
-	end if; 
+	end if;
 end process PointRegister;
 
 Comparator:
@@ -75,7 +75,7 @@ begin
 						state <= SWIN;
 					elsif D2312 = '1' then
 						state <= SLOSE;
-					else 
+					else
 						state <= SIDLE;
 					end if;
 				when SIDLE =>
@@ -91,7 +91,7 @@ begin
 						state <= SWIN;
 					elsif D7 = '1' then
 						state <= SLOSE;
-					else 
+					else
 						state <= SIDLE;
 					end if;
 				when others =>
@@ -153,4 +153,4 @@ begin
 
 end process ControlOutput;
 
-end architecture Behav;
+end architecture behav;

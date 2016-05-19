@@ -8,14 +8,14 @@ port(
 	Rb: in std_logic;
 	Win: out std_logic;
 	Lose: out std_logic;
-	sseg: out std_logic_vector(6 downto 0); 
-	an: out std_logic_vector(3 downto 0); 
+	sseg: out std_logic_vector(6 downto 0);
+	an: out std_logic_vector(3 downto 0);
 	dp: out std_logic
 );
 end entity DG_ALL;
 
-architecture Behav of DG_ALL is
-	attribute LOC : string;       
+architecture struct of DG_ALL is
+	attribute LOC : string;
 	attribute LOC of sseg : signal is "H14 J17 G14 D16 D17 F18 L18";
 	attribute LOC of an : signal is "F17 H17 C18 F15";
 	attribute LOC of dp : signal is "C17";
@@ -85,7 +85,7 @@ Sum_display <= "000" & Sum(4);
 display: entity work.led4dp_driver
 	port map(
 		a => numberA,
-		b => numberB, 
+		b => numberB,
 		c => Sum_display,
 		d => Sum(3 downto 0),
 		dp_dcba => "0100",
@@ -95,4 +95,4 @@ display: entity work.led4dp_driver
 		dp => dp
 	);
 
-end architecture Behav;
+end architecture struct;

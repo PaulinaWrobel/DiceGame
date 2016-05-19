@@ -39,7 +39,8 @@ ClkI <= not ClkI after 10 ns;
 
 TBState: process (ClkI_10Hz)
 begin
-	if ClkI_10Hz = '1' and ClkI_10Hz'event then
+	if (ClkI_10Hz = '1' and ClkI_10Hz'event) then
+		write_text <= write_text;
 		case state is
 			when SRESET =>
 				state <= SROLL;
@@ -51,8 +52,10 @@ begin
 				state <= SWRITE;
 			when SWRITE =>
 				if (WinI='1' or LoseI='1') then
+					write_text <= "NEW";
 					state <= SRESET;
 				else
+					write_text <= "   ";
 					state <= SROLL;
 				end if;
 		end case;
@@ -91,7 +94,7 @@ begin
 	end case;
 end process TBOutputs; 
 
-write_text <= "NEW" when (WinI='1' or LoseI='1') else "   ";
+--write_text <= "NEW" when (WinI='1' or LoseI='1') else "   ";
 
 write_file: process (write_enable)
 	file file_results: text open write_mode is "testbench_results.txt";
@@ -99,8 +102,8 @@ write_file: process (write_enable)
 	constant space_char: character := ' ';
 	constant sep_char: character := '|';
 begin
-	if (now < 20 ns) then
-		write(line_results, string'("Time"), right, 10);
+	if (now = 0 ns) then
+		write(line_results, string'("Time"), right, 20);
 		write(line_results, space_char);
 		write(line_results, sep_char);
        	write(line_results, string'("A"), right, 2);
@@ -114,8 +117,8 @@ begin
 		write(line_results, space_char);
        	write(line_results, string'("Game"), left, 5);
        	writeline(file_results, line_results);
-	elsif write_enable='1' and write_enable'event then
-		write(line_results, now, right, 10);
+	elsif (write_enable='1' and write_enable'event) then
+		write(line_results, now, right, 20);
 		write(line_results, space_char);
 		write(line_results, sep_char);
        	write(line_results, to_integer(unsigned(<<signal .TB_DG_ALL.UUT.numberA : std_logic_vector(3 downto 0)>>)), right, 2);
@@ -134,10 +137,12 @@ end process write_file;
 
 sim_end_n: process (RbI)
 begin
-	assert n < 10
-		report "End of simulation because n = " & integer'image(n)
-		severity Failure;
-	n <= n + 1;
+	if (RbI'event and RbI='1') then
+		assert n < 10
+			report "End of simulation because n = " & integer'image(n)
+			severity Failure;
+		n <= n + 1;
+	end if;
 end process sim_end_n;
 
 sim_end_process: process

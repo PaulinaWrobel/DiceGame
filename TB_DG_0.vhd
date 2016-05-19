@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity TB_DG_0 is
 end entity TB_DG_0;
 
-architecture Behav of TB_DG_0 is
+architecture struct of TB_DG_0 is
 	signal ClkI: std_logic;
 	signal ResetI: std_logic;
 	signal RbI: std_logic;
@@ -44,4 +44,4 @@ Test: entity work.GameTest
 			severity Failure;
 	end process sim_end_process;
 
-end architecture Behav;
+end architecture struct;

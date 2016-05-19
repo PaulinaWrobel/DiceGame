@@ -1,19 +1,19 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity led4dp_driver is
-    Port ( a : in  STD_LOGIC_VECTOR (3 downto 0);       -- digit AN0
-           b : in  STD_LOGIC_VECTOR (3 downto 0);       -- digit AN1
-           c : in  STD_LOGIC_VECTOR (3 downto 0);       -- digit AN2
-           d : in  STD_LOGIC_VECTOR (3 downto 0);       -- digit AN3 
-           dp_dcba : in  STD_LOGIC_VECTOR (3 downto 0);
-           clk_in : in  STD_LOGIC;                      -- ~ 1kHz
-           sseg : out  STD_LOGIC_VECTOR (6 downto 0);   -- active Low
-           an : out  STD_LOGIC_VECTOR (3 downto 0);     -- active Low
-           dp : out STD_LOGIC);                         -- active Low
+    Port ( a: in std_logic_vector(3 downto 0);       -- digit AN0
+           b: in std_logic_vector(3 downto 0);       -- digit AN1
+           c: in std_logic_vector(3 downto 0);       -- digit AN2
+           d: in std_logic_vector(3 downto 0);       -- digit AN3
+           dp_dcba: in std_logic_vector(3 downto 0);
+           clk_in: in std_logic;                      -- ~ 1kHz
+           sseg: out std_logic_vector(6 downto 0);   -- active Low
+           an: out std_logic_vector(3 downto 0);     -- active Low
+           dp: out std_logic);                         -- active Low
 end led4dp_driver;
 
-architecture Behavioral of led4dp_driver is
+architecture behav of led4dp_driver is
 signal one_hot,address,digit: std_logic_vector(3 downto 0):="1110";
 signal seg: std_logic_vector(6 downto 0);
 signal dpi: std_logic;
@@ -23,7 +23,7 @@ begin
 address <= one_hot;
 an_out: an <= one_hot;
 sseg_out: sseg <= not(seg);
-dp_out: dp <= not(dpi); 
+dp_out: dp <= not(dpi);
 
 data_mux: with address select
     digit <= a when "1110",
@@ -39,9 +39,9 @@ dp_mux: with address select
 
 addr_reg: process(clk_in)
 begin
-    if rising_edge(clk_in) then 
+    if rising_edge(clk_in) then
         one_hot <= one_hot(2 downto 0) & one_hot(3);
-    end if;    
+    end if;
 end process;
 
 sseg_dec: with digit select             --        0
@@ -62,5 +62,4 @@ sseg_dec: with digit select             --        0
         "1110001" when "1111",
         "0111111" when others;
 
-end Behavioral;
-
+end behav;

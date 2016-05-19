@@ -1,7 +1,7 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
 
 entity clk_gen is
 	port(
@@ -14,7 +14,7 @@ entity clk_gen is
 	);
 end clk_gen;
 
-architecture Behavioral of clk_gen is
+architecture behav of clk_gen is
 constant N_1MHz: natural := 50/2;
 constant N_1kHz: natural := 1000;
 constant N_10Hz: natural := 100;
@@ -156,5 +156,4 @@ end process output_B;
 clk_B <= clk_B_i;
 ------------------- A ----------------------
 
-end Behavioral;
-
+end behav;

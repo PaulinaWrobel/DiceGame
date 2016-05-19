@@ -13,13 +13,13 @@ port(
 );
 end entity GameTest;
 
-architecture Behav of GameTest is
+architecture behav of GameTest is
 	type state_type is (SRB, SSUM, SCHECK, SRESET);
 	signal state: state_type;
 	signal ClkI: std_logic := '0';
 	signal SumI: std_logic_vector(4 downto 0) := "00000";
 
-	type array_type is array (12 downto 0) of std_logic_vector(4 downto 0); 
+	type array_type is array (12 downto 0) of std_logic_vector(4 downto 0);
 	signal SumArray: array_type := ("00100", "00101", "00100", "00101", "00111", "00100", "00110", "00110", "01100", "00011", "00010", "01011", "00111");
 	signal n: integer range 0 to 12;
 
@@ -34,7 +34,7 @@ TestState: process (ClkI)
 begin
 	if ClkI = '1' and ClkI'event then
 		case state is
-			when SRB => 
+			when SRB =>
 				if Roll = '1' then
 					state <= SSUM;
 				end if;
@@ -58,14 +58,16 @@ end process TestState;
 TestOutput: process (state)
 begin
 	case state is
-		when SRB => 
+		when SRB =>
 			Reset <= '0';
 			Rb <= '1';
 			SumI <= SumI;
+			n <= n;
 		when SCHECK =>
 			Reset <= '0';
 			Rb <= '0';
 			SumI <= SumI;
+			n <= n;
 		when SSUM =>
 			Reset <= '0';
 			Rb <= '0';
@@ -75,12 +77,14 @@ begin
 			Reset <= '1';
 			Rb <= '0';
 			SumI <= SumI;
+			n <= n;
 		when others =>
 			Reset <= '1';
 			Rb <= '0';
 			SumI <= SumI;
+			n <= n;
 	end case;
 end process TestOutput;
 
 
-end architecture Behav;
+end architecture behav;

@@ -10,8 +10,8 @@ port(
 );
 end entity counter;
 
-architecture struct of counter is
-	signal number_i: std_logic_vector(3 downto 0) := "0000"; 
+architecture behav of counter is
+	signal number_i: std_logic_vector(3 downto 0) := "0000";
 begin
 
 count: process (clk)
@@ -26,4 +26,4 @@ end process count;
 
 number <= number_i;
 
-end architecture struct;
+end architecture behav;

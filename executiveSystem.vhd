@@ -1,5 +1,5 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
+library ieee;
+use ieee.std_logic_1164.all;
 
 entity executiveSystem is
   port(A_in: in std_logic_vector(3 downto 0);
@@ -31,8 +31,8 @@ fullAdder: entity work.fullAdder
 DFF: entity work.DFF
 	port map(d=>next_c, clk=>clk_in, rst=>rst_in, ce=>ce, q=>last_c);
 
-outputs(4)<= last_c;
-outputs(3 downto 0)<=Q_A;
+outputs(4) <= last_c;
+outputs(3 downto 0) <=Q_A;
 
 ce <= S1_in or S0_in;
 
