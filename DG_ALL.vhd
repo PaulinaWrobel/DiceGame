@@ -35,7 +35,7 @@ architecture struct of DG_ALL is
 begin
 
 --Rb_stop <= not stop;
-Rb_stop <= Rb and (not stop);
+Rb_stop <= Rb or (not stop);
 
 clk_gen: entity work.clk_gen
 	port map(
