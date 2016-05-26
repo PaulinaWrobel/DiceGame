@@ -65,7 +65,7 @@ end process TBState;
 TBOutputs: process (state)
     variable seed1: positive;
     variable seed2: positive;
-    variable re1: integer range 0 to 90;
+    variable re1: integer range 0 to 190;
     variable re2: real;
 begin
 	case state is
@@ -80,7 +80,7 @@ begin
 		when SROLL2 =>
 			ResetI <= '0';
 			uniform (seed1,seed2,re2);
-			re1 := integer (re2 * 90.0); 
+			re1 := integer (re2 * 190.0); 
 			RbI <= '1', '0' after re1 * 1 ms;
 			write_enable <= '0';
 		when SWAIT =>

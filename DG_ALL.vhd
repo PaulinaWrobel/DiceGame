@@ -34,7 +34,8 @@ architecture struct of DG_ALL is
 
 begin
 
-Rb_stop <= not stop;
+--Rb_stop <= not stop;
+Rb_stop <= Rb and (not stop);
 
 clk_gen: entity work.clk_gen
 	port map(
@@ -59,7 +60,7 @@ DG_NoSum: entity work.DG_NoSum
 
 adder: entity work.serialAdder
 	port map(
-		start => Rb,
+		start => Roll,
 		clk => clk_1kHz,
 		IN_A => numberA,
 		IN_B => numberB,
@@ -70,14 +71,14 @@ adder: entity work.serialAdder
 counterA: entity work.counter
 	port map(
 		clk => clk_A,
-		start => Rb,
+		start => Roll,
 		number => numberA
 	);
 
 counterB: entity work.counter
 	port map(
 		clk => clk_B,
-		start => Rb,
+		start => Roll,
 		number => numberB
 	);
 
