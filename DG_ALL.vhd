@@ -35,7 +35,7 @@ architecture struct of DG_ALL is
 begin
 
 --Rb_stop <= not stop;
-Rb_stop <= Rb or (not stop);
+Rb_stop <= Roll or (not stop);
 
 clk_gen: entity work.clk_gen
 	port map(
@@ -51,7 +51,7 @@ DG_NoSum: entity work.DG_NoSum
 	port map(
 		Clk => clk_10Hz,
 		Reset => Reset,
-		Rb => Rb_stop,
+		Rb => Rb,
 		Sum => Sum,
 		Roll => Roll,
 		Win => Win,

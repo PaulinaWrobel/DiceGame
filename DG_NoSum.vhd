@@ -14,7 +14,7 @@ port(
 end entity DG_NoSum;
 
 architecture behav of DG_NoSum is
-	type state_type is (SINIT, SWIN, SLOSE, SROLL1, SCHECK1, SROLL2, SCHECK2, SIDLE);
+	type state_type is (SINIT, SWIN, SLOSE, SROLL1, SCHECK1, SROLL2, SCHECK2, SIDLE, SWAIT1, SWAIT2);
 	signal state: state_type;
 	signal D7: std_logic;
 	signal D711: std_logic;
@@ -68,8 +68,10 @@ begin
 				when SLOSE =>
 				when SROLL1 =>
 					if Rb = '0' then
-						state <= SCHECK1;
+						state <= SWAIT1;
 					end if;
+				when SWAIT1 =>
+						state <= SCHECK1;
 				when SCHECK1 =>
 					if D711 = '1' then
 						state <= SWIN;
@@ -84,8 +86,10 @@ begin
 					end if;
 				when SROLL2 =>
 					if Rb = '0' then
-						state <= SCHECK2;
+						state <= SWAIT2;
 					end if;
+				when SWAIT2 =>
+					state <= SCHECK2;
 				when SCHECK2 =>
 					if Eq = '1' then
 						state <= SWIN;
@@ -124,6 +128,11 @@ begin
 			Lose <= '0';
 			Roll <= '1';
 			Sp <= '0';
+		when SWAIT1 =>
+			Win <= '0';
+			Lose <= '0';
+			Roll <= '0';
+			Sp <= '0';
 		when SCHECK1 =>
 			Win <= '0';
 			Lose <= '0';
@@ -138,6 +147,11 @@ begin
 			Win <= '0';
 			Lose <= '0';
 			Roll <= '1';
+			Sp <= '0';
+		when SWAIT2 =>
+			Win <= '0';
+			Lose <= '0';
+			Roll <= '0';
 			Sp <= '0';
 		when SCHECK2 =>
 			Win <= '0';

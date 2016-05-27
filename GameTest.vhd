@@ -14,7 +14,7 @@ port(
 end entity GameTest;
 
 architecture behav of GameTest is
-	type state_type is (SRB, SSUM, SCHECK, SRESET);
+	type state_type is (SRB, SSUM, SCHECK, SRESET, SWAIT);
 	signal state: state_type;
 	signal ClkI: std_logic := '0';
 	signal SumI: std_logic_vector(4 downto 0) := "00000";
@@ -45,8 +45,10 @@ begin
 				end if;
 			when SSUM =>
 				if Roll = '0' then
-					state <= SCHECK;
+					state <= SWAIT;
 				end if;
+			when SWAIT =>
+				state <= SCHECK;
 			when SRESET =>
 				state <= SRB;
 			when others =>
@@ -61,6 +63,11 @@ begin
 		when SRB =>
 			Reset <= '0';
 			Rb <= '1';
+			SumI <= SumI;
+			n <= n;
+		when SWAIT =>
+			Reset <= '0';
+			Rb <= '0';
 			SumI <= SumI;
 			n <= n;
 		when SCHECK =>

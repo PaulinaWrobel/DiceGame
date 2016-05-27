@@ -81,7 +81,8 @@ begin
 			ResetI <= '0';
 			uniform (seed1,seed2,re2);
 			re1 := integer (re2 * 190.0); 
-			RbI <= '1', '0' after re1 * 1 ms;
+			--RbI <= '1', '0' after re1 * 1 ms;
+			RbI <= '0';
 			write_enable <= '0';
 		when SWAIT =>
 			ResetI <= '0';
