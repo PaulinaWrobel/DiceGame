@@ -17,7 +17,7 @@ architecture Behav of TB_DG_ALL is
 	signal write_enable: std_logic;
 	signal write_text: string(1 to 3);
 
-	type state_type is (SRESET, SROLL, SROLL2, SWAIT, SWRITE);
+	type state_type is (SRESET, SROLL, SWAIT, SWAIT2, SWAIT3, SWRITE);
 	signal state: state_type;
 	signal n: integer range 0 to 11;
 
@@ -45,10 +45,12 @@ begin
 			when SRESET =>
 				state <= SROLL;
 			when SROLL =>
-				state <= SROLL2;
-			when SROLL2 =>
 				state <= SWAIT;
 			when SWAIT =>
+				state <= SWAIT2;
+			when SWAIT2 =>
+				state <= SWAIT3;
+			when SWAIT3 =>
 				state <= SWRITE;
 			when SWRITE =>
 				if (WinI='1' or LoseI='1') then
@@ -77,14 +79,22 @@ begin
 			ResetI <= '0';
 			RbI <= '1';
 			write_enable <= '0';
-		when SROLL2 =>
-			ResetI <= '0';
-			uniform (seed1,seed2,re2);
-			re1 := integer (re2 * 190.0); 
+		--when SROLL2 =>
+			--ResetI <= '0';
+			--uniform (seed1,seed2,re2);
+			--re1 := integer (re2 * 190.0); 
 			--RbI <= '1', '0' after re1 * 1 ms;
+			--RbI <= '0';
+			--write_enable <= '0';
+		when SWAIT =>
+			ResetI <= '0';
 			RbI <= '0';
 			write_enable <= '0';
-		when SWAIT =>
+		when SWAIT2 =>
+			ResetI <= '0';
+			RbI <= '0';
+			write_enable <= '0';
+		when SWAIT3 =>
 			ResetI <= '0';
 			RbI <= '0';
 			write_enable <= '0';
