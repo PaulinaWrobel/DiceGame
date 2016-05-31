@@ -34,7 +34,6 @@ architecture struct of DG_ALL is
 
 begin
 
---Rb_stop <= not stop;
 Rb_stop <= Roll or (not stop);
 
 clk_gen: entity work.clk_gen
@@ -97,3 +96,7 @@ display: entity work.led4dp_driver
 	);
 
 end architecture struct;
+
+
+
+

@@ -15,7 +15,7 @@ architecture Behav of TB_DG_ALL is
 	signal WinI: std_logic;
 	signal LoseI: std_logic;
 	signal write_enable: std_logic;
-	signal write_text: string(1 to 3);
+	signal write_text: string(1 to 3) := "   ";
 
 	type state_type is (SRESET, SROLL, SWAIT, SWAIT2, SWAIT3, SWRITE);
 	signal state: state_type;
@@ -62,7 +62,7 @@ begin
 				end if;
 		end case;
 	end if;
-end process TBState; 
+end process TBState;
 
 TBOutputs: process (state)
     variable seed1: positive;
@@ -79,13 +79,6 @@ begin
 			ResetI <= '0';
 			RbI <= '1';
 			write_enable <= '0';
-		--when SROLL2 =>
-			--ResetI <= '0';
-			--uniform (seed1,seed2,re2);
-			--re1 := integer (re2 * 190.0); 
-			--RbI <= '1', '0' after re1 * 1 ms;
-			--RbI <= '0';
-			--write_enable <= '0';
 		when SWAIT =>
 			ResetI <= '0';
 			RbI <= '0';
@@ -103,7 +96,7 @@ begin
 			RbI <= '0';
 			write_enable <= '1' after 10 ns;
 	end case;
-end process TBOutputs; 
+end process TBOutputs;
 
 --write_text <= "NEW" when (WinI='1' or LoseI='1') else "   ";
 
